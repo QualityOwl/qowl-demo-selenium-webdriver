@@ -4,7 +4,6 @@ using OpenQA.Selenium.Interactions;
 using System;
 using System.Linq;
 using WebDriverDemo.Extensions;
-using WebDriverDemo.Extensions.Logging;
 using WebDriverDemo.Libraries;
 using Xunit;
 using Xunit.Abstractions;
@@ -17,7 +16,7 @@ namespace WebDriverDemo.Tests
 
         public GoogleTests(ITestOutputHelper log) : base(log)
         {
-            Log.StepDescription($"Initialize webdriver and navigate to '{_baseUrl}'");
+            Log.StepDescription($"Navigate to '{_baseUrl}'");
             WebDriver = new ChromeDriver()
             {
                 Url = _baseUrl
@@ -31,9 +30,10 @@ namespace WebDriverDemo.Tests
         {
             // Arrange
             var searchTerm = "yellow submarine wiki";
+            var expectedLinkText = "Yellow Submarine (song)";
 
             // Act
-            Log.StepDescription("Enter search term into search field.");
+            Log.StepDescription($"Enter '{searchTerm}' into 'Search' field.");
             var searchField = WebDriver.FindElement(By.CssSelector("input[type=\"text\"]"));
             searchField.SendKeys(searchTerm);
 
@@ -41,9 +41,9 @@ namespace WebDriverDemo.Tests
             ClickSearchButton();
 
             // Assert
-            Log.StepDescription("Validate the returned search results page.");
+            Log.StepDescription($"Verify that '{expectedLinkText}' hyperlink is returned in the search results.");
             var actualResultElement = WebDriver.FindElement(By.CssSelector(@"a[href*=Yellow_Submarine_\(song\)]"));
-            Assert.True(actualResultElement.Text.Contains("Yellow Submarine (song)"));
+            Assert.True(actualResultElement.Text.Contains(expectedLinkText));
         }
 
         [Fact]
@@ -52,22 +52,23 @@ namespace WebDriverDemo.Tests
         {
             // Arrange
             var searchTerm = "saturn five rocket";
+            var expectedLinkText = "Saturn V";
 
             // Act
-            Log.StepDescription("Enter search term into search field.");
+            Log.StepDescription($"Enter '{searchTerm}' into 'Search' field.");
             var searchField = WebDriver.FindElement(By.XPath("//input[@type='text']"));
             searchField.SendKeys(searchTerm);
 
             Log.StepDescription("Click 'Search' button.");
             ClickSearchButton();
 
-            Log.StepDescription("Scroll down to the fifth results page.");
+            Log.StepDescription("Page down to the fifth results page.");
             PressPageDownKey(5);
 
             // Assert
-            Log.StepDescription("Validate the returned search results page.");
+            Log.StepDescription($"Verify that '{expectedLinkText}' hyperlink is returned in the search results.");
             var actualResultElement = WebDriver.FindElement(By.XPath(@"//a[@href='http://www.astronautix.com/s/saturnv.html']"));
-            Assert.True(actualResultElement.Text.Contains("Saturn V"));
+            Assert.True(actualResultElement.Text.Contains(expectedLinkText));
         }
 
         private void ClickSearchButton()

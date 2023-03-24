@@ -1,6 +1,6 @@
 using OpenQA.Selenium;
 using System;
-using WebDriverDemo.Extensions.Logging;
+using WebDriverDemo.Extensions;
 using Xunit.Abstractions;
 
 namespace WebDriverDemo.Libraries

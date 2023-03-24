@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Serialization;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
@@ -26,11 +27,12 @@ namespace WebDriverDemo.Tests
 
         [Fact]
         [Trait("By", "CssSelector")]
-        public void GoogleSearch_SearchForYellowSubmarineWikie_YellowSubmarineWikiHyperlinkIsPresentInResults()
+        public void GoogleSearch_SearchForYellowSubmarineWikie_YellowSubmarineWikiPageIsDisplayed()
         {
             // Arrange
             var searchTerm = "yellow submarine wiki";
             var expectedLinkText = "Yellow Submarine (song)";
+            var expectedUrl = "https://en.wikipedia.org/wiki/Yellow_Submarine_(song)";
 
             // Act
             Log.StepDescription($"Enter '{searchTerm}' into 'Search' field.");
@@ -40,10 +42,16 @@ namespace WebDriverDemo.Tests
             Log.StepDescription("Click 'Search' button.");
             ClickSearchButton();
 
+            Log.StepDescription($"Click '{expectedLinkText}' hyperlink.");
+            var searchResultHyperlink = WebDriver.FindElement(By.CssSelector(@"a[href*=Yellow_Submarine_\(song\)]"));
+            searchResultHyperlink.Click();
+
             // Assert
-            Log.StepDescription($"Verify that '{expectedLinkText}' hyperlink is returned in the search results.");
-            var actualResultElement = WebDriver.FindElement(By.CssSelector(@"a[href*=Yellow_Submarine_\(song\)]"));
-            Assert.True(actualResultElement.Text.Contains(expectedLinkText));
+            Log.StepDescription($"Verify that the '{expectedLinkText}' page successfully displays");
+
+            var actualUrl = WebDriver.Url;
+            
+            Assert.Equal(expectedUrl, actualUrl);
         }
 
         [Fact]

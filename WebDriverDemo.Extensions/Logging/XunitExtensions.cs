@@ -1,6 +1,6 @@
 ﻿using Xunit.Abstractions;
 
-namespace WebDriverDemo.Extensions.Logging
+namespace WebDriverDemo.Extensions
 {
     public static class XunitExtensions
     {
@@ -9,15 +9,17 @@ namespace WebDriverDemo.Extensions.Logging
         public static void StepDescription(this ITestOutputHelper output, string input)
         {
             output.WriteLine($"Step #{(_stepNumber <= 9 ? $"{_stepNumber} " : _stepNumber)} *** {input}");
-
+            
             _stepNumber++;
         }
 
         public static void HeaderText(this ITestOutputHelper output, string input = "Test started!")
         {
-            var logText = $"======== {input} ========";
+            ResetSteps();
 
-            output.WriteLine(logText);
+            var logText = $"======== {input} ========";
+            
+            output.WriteLine(logText);            
             
             output.WriteLine(new string('=', logText.Length));
         }
@@ -27,8 +29,15 @@ namespace WebDriverDemo.Extensions.Logging
             var logText = $"======== {input} ========";
 
             output.WriteLine(new string('=', logText.Length));
-
+            
             output.WriteLine(logText);
+
+            ResetSteps();
+        }
+
+        private static void ResetSteps()
+        {
+            _stepNumber = 1;
         }
     }
 }

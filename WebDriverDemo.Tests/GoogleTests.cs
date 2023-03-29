@@ -1,11 +1,7 @@
-using Newtonsoft.Json.Serialization;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
-using System;
-using System.Linq;
 using WebDriverDemo.Extensions;
 using WebDriverDemo.Libraries;
+using WebDriverDemo.Libraries.Maps.Google;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -13,21 +9,16 @@ namespace WebDriverDemo.Tests
 {
     public class GoogleTests : TestBase
     {
-        private string _baseUrl = "https://www.google.com/";
+        private GoogleRunner _googleRunner;
 
-        public GoogleTests(ITestOutputHelper log) : base(log)
+        public GoogleTests(ITestOutputHelper output) : base(output)
         {
-            Log.StepDescription($"Navigate to '{_baseUrl}'");
-            WebDriver = new ChromeDriver()
-            {
-                Url = _baseUrl
-            };
-            WebDriver.WaitForPageLoad();
+            Log.StepDescription("Instantiate Google test runner.");
+            _googleRunner = new GoogleRunner(output, WebDriver);
         }
 
         [Fact]
-        [Trait("By", "CssSelector")]
-        public void GoogleSearch_SearchForYellowSubmarineWikie_YellowSubmarineWikiPageIsDisplayed()
+        public void GoogleSearch_SearchForYellowSubmarineWiki_YellowSubmarineWikiPageIsDisplayed()
         {
             // Arrange
             var searchTerm = "yellow submarine wiki";
@@ -36,75 +27,18 @@ namespace WebDriverDemo.Tests
 
             // Act
             Log.StepDescription($"Enter '{searchTerm}' into 'Search' field.");
-            var searchField = WebDriver.FindElement(By.CssSelector("input[type=\"text\"]"));
-            searchField.SendKeys(searchTerm);
+            _googleRunner.Search.EnterSearchTextbox(searchTerm);
 
             Log.StepDescription("Click 'Search' button.");
-            ClickSearchButton();
+            _googleRunner.Search.ClickSearchButton();
 
             Log.StepDescription($"Click '{expectedLinkText}' hyperlink.");
-            var searchResultHyperlink = WebDriver.FindElement(By.CssSelector(@"a[href*=Yellow_Submarine_\(song\)]"));
-            searchResultHyperlink.Click();
+            _googleRunner.Search.ClickHyperlink(expectedLinkText);
 
             // Assert
             Log.StepDescription($"Verify that the '{expectedLinkText}' page successfully displays");
-
-            var actualUrl = WebDriver.Url;
-            
+            var actualUrl = _googleRunner.CurrentUrl;
             Assert.Equal(expectedUrl, actualUrl);
-        }
-
-        [Fact]
-        [Trait("By", "XPath")]
-        public void GoogleSearch_SearchForSaturnFiveRocket_EncyclopediaAstronauticaHyperlinkIsPresentInResults()
-        {
-            // Arrange
-            var searchTerm = "saturn five rocket";
-            var expectedLinkText = "Saturn V";
-
-            // Act
-            Log.StepDescription($"Enter '{searchTerm}' into 'Search' field.");
-            var searchField = WebDriver.FindElement(By.XPath("//input[@type='text']"));
-            searchField.SendKeys(searchTerm);
-
-            Log.StepDescription("Click 'Search' button.");
-            ClickSearchButton();
-
-            Log.StepDescription("Page down to the fifth results page.");
-            PressPageDownKey(5);
-
-            // Assert
-            Log.StepDescription($"Verify that '{expectedLinkText}' hyperlink is returned in the search results.");
-            var actualResultElement = WebDriver.FindElement(By.XPath(@"//a[@href='http://www.astronautix.com/s/saturnv.html']"));
-            Assert.True(actualResultElement.Text.Contains(expectedLinkText));
-        }
-
-        private void ClickSearchButton()
-        {
-            var searchButtonElements = WebDriver.FindElements(By.XPath("//input[@type='submit'][@value='Google Search']")).ToList();
-
-            foreach (var button in searchButtonElements)
-            {
-                var clientWidth = (long)((IJavaScriptExecutor)WebDriver).ExecuteScript("return arguments[0].clientWidth;", button);
-
-                if (clientWidth > 0)
-                {
-                    button.Click();
-                    break;
-                }
-            }
-        }
-
-        private void PressPageDownKey(int numberOfPresses = 1)
-        {
-            var actions = new Actions(WebDriver);
-
-            for (int i = 1; i <= numberOfPresses; i++)
-            {
-                actions.SendKeys(Keys.PageDown).Perform();
-
-                actions.Pause(TimeSpan.FromSeconds(3));
-            }
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace WebDriverDemo.Extensions
 {
-    public static class XunitExtensions
+    public static class ITestOutputHelperExtensions
     {
         private static int _stepNumber = 1;
 
@@ -11,6 +11,11 @@ namespace WebDriverDemo.Extensions
             output.WriteLine($"Step #{(_stepNumber <= 9 ? $"{_stepNumber} " : _stepNumber)} *** {input}");
             
             _stepNumber++;
+        }
+
+        public static void ResultDescription(this ITestOutputHelper output, string input)
+        {
+            output.WriteLine($"         *** {input}");
         }
 
         public static void HeaderText(this ITestOutputHelper output, string input = "Test started!")

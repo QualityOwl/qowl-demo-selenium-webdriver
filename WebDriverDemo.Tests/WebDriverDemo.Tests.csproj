@@ -10,8 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
-    <PackageReference Include="Selenium.Support" Version="4.8.1" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.8.1" />
+    <PackageReference Include="Selenium.Support" Version="4.8.2" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.8.2" />
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="111.0.5563.6400" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebDriveDemo.Security\WebDriveDemo.Security.csproj" />
     <ProjectReference Include="..\WebDriverDemo.Extensions\WebDriverDemo.Extensions.csproj" />
     <ProjectReference Include="..\WebDriverDemo.Libraries\WebDriverDemo.Libraries.csproj" />
   </ItemGroup>

@@ -1,19 +1,18 @@
-using OpenQA.Selenium.Interactions;
 using WebDriverDemo.Extensions;
-using WebDriverDemo.Libraries;
+using WebDriverDemo.Libraries.Core;
 using WebDriverDemo.Libraries.Maps.Google;
+using WebDriverDemo.Libraries.Wrappers;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace WebDriverDemo.Tests
+namespace WebDriverDemo.Tests.Google
 {
-    public class GoogleTests : TestBase
+    public class SearchTests : TestBase
     {
         private GoogleRunner _googleRunner;
 
-        public GoogleTests(ITestOutputHelper output) : base(output)
+        public SearchTests(ITestOutputHelper output) : base(output)
         {
-            Log.StepDescription("Instantiate Google test runner.");
             _googleRunner = new GoogleRunner(output, WebDriver);
         }
 
@@ -27,18 +26,18 @@ namespace WebDriverDemo.Tests
 
             // Act
             Log.StepDescription($"Enter '{searchTerm}' into 'Search' field.");
-            _googleRunner.Search.EnterSearchTextbox(searchTerm);
+            _googleRunner.Home.EnterSearchTextbox(searchTerm);
 
             Log.StepDescription("Click 'Search' button.");
-            _googleRunner.Search.ClickSearchButton();
+            _googleRunner.Home.ClickSearchButton();
 
             Log.StepDescription($"Click '{expectedLinkText}' hyperlink.");
-            _googleRunner.Search.ClickHyperlink(expectedLinkText);
+            _googleRunner.Home.ClickHyperlink(expectedLinkText);
 
             // Assert
             Log.StepDescription($"Verify that the '{expectedLinkText}' page successfully displays");
             var actualUrl = _googleRunner.CurrentUrl;
-            Assert.Equal(expectedUrl, actualUrl);
+            AssertWrapper.Equal(expectedUrl, actualUrl);            
         }
     }
 }

@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebDriverDemo.Tests", "WebD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebDriverDemo.Libraries", "WebDriverDemo.Libraries\WebDriverDemo.Libraries.csproj", "{D816B02E-CCDF-4A4B-B4EC-6CC4001E1740}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDriverDemo.Extensions", "WebDriverDemo.Extensions\WebDriverDemo.Extensions.csproj", "{157BFCD3-7847-4BA0-81CF-8E822A25F05C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebDriverDemo.Extensions", "WebDriverDemo.Extensions\WebDriverDemo.Extensions.csproj", "{157BFCD3-7847-4BA0-81CF-8E822A25F05C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDriveDemo.Security", "WebDriveDemo.Security\WebDriveDemo.Security.csproj", "{FEEB301F-46FA-47F4-8FED-794D3CB1079A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{157BFCD3-7847-4BA0-81CF-8E822A25F05C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{157BFCD3-7847-4BA0-81CF-8E822A25F05C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{157BFCD3-7847-4BA0-81CF-8E822A25F05C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEEB301F-46FA-47F4-8FED-794D3CB1079A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEEB301F-46FA-47F4-8FED-794D3CB1079A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEEB301F-46FA-47F4-8FED-794D3CB1079A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEEB301F-46FA-47F4-8FED-794D3CB1079A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

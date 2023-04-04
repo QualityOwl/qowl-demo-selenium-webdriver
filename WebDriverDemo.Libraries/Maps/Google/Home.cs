@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace WebDriverDemo.Libraries.Maps.Google
 {
-    public class Search
+    public class Home
     {
         private readonly IWebDriver _webDriver;
 
-        public Search(IWebDriver webDriver)
+        public Home(IWebDriver webDriver)
         {
             _webDriver = webDriver;
         }
@@ -41,5 +41,19 @@ namespace WebDriverDemo.Libraries.Maps.Google
 
             hyperlink.Click();
         }
+
+        public void ExpandAppsMenu()
+        {
+            UIAppsMenuIcon.Click();
+        }
+
+        public void ClickAppMenuItem(string applicationName)
+        {
+            var application = _webDriver.FindElement(By.XPath($".//a[contains(text(), '{applicationName}')]"));
+
+            application.Click();
+        }
+
+        private WebElement UIAppsMenuIcon => (WebElement)_webDriver.FindElement(By.CssSelector("a[aria-label='Google apps']"));
     }
 }

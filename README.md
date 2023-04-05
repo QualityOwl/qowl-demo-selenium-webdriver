@@ -1,6 +1,6 @@
-# Selenium WebDriver C# Solution
+# Selenium WebDriver (C#) Project
 
-This repository contains my Selenium WebDriver solution written in C# from scratch. The solution is designed to showcase my skills and to demonstrate my understanding of test automation using Selenium WebDriver.
+This repository contains my Selenium WebDriver project written in C# from scratch. The project is designed to showcase my skills and demonstrate my understanding of test automation using Selenium WebDriver.
 
 ## Getting Started
 
@@ -17,7 +17,7 @@ To get started with this solution, you will need the following:
 
 2. Open the solution file 'WebDriverDemo.sln' in Visual Studio.
 
-3. Build  solution in Visual Studio.
+3. Build the solution in Visual Studio.
 
 ## Usage
 

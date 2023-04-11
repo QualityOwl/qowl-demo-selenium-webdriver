@@ -9,11 +9,11 @@ namespace WebDriverDemo.Tests.Google
 {
     public class SearchTests : TestBase
     {
-        private GoogleRunner _googleRunner;
+        private GoogleRunner _google;
 
         public SearchTests(ITestOutputHelper output) : base(output)
         {
-            _googleRunner = new GoogleRunner(output, WebDriver);
+            _google = new GoogleRunner(output, WebDriver);
         }
 
         [Fact]
@@ -26,17 +26,17 @@ namespace WebDriverDemo.Tests.Google
 
             // Act
             Log.StepDescription($"Enter '{searchTerm}' into 'Search' field.");
-            _googleRunner.Home.EnterSearchTextbox(searchTerm);
+            _google.Home.EnterSearchTextbox(searchTerm);
 
             Log.StepDescription("Click 'Search' button.");
-            _googleRunner.Home.ClickSearchButton();
+            _google.Home.ClickSearchButton();
 
             Log.StepDescription($"Click '{expectedLinkText}' hyperlink.");
-            _googleRunner.Home.ClickHyperlink(expectedLinkText);
+            _google.Home.ClickHyperlink(expectedLinkText);
 
             // Assert
             Log.StepDescription($"Verify that the '{expectedLinkText}' page successfully displays");
-            var actualUrl = _googleRunner.CurrentUrl;
+            var actualUrl = _google.CurrentUrl;
             AssertWrapper.Equal(expectedUrl, actualUrl);            
         }
     }

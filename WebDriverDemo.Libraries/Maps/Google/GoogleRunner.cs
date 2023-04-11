@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 using System;
 using System.Threading;
 using WebDriverDemo.Extensions;
@@ -30,23 +29,11 @@ namespace WebDriverDemo.Libraries.Maps.Google
             WebDriver.WaitForPageLoad();
         }
 
-        public void PressSendKey(int numberOfPresses = 1)
-        {
-            var actions = new Actions(WebDriver);
-
-            for (int i = 1; i <= numberOfPresses; i++)
-            {
-                actions.SendKeys(Keys.PageDown).Perform();
-
-                actions.Pause(TimeSpan.FromSeconds(3));
-            }
-        }
-
         public void WaitForUrlChange(string expectedUrl, int waitTimeSeconds = 10)
         {
             var startTime = DateTime.Now;
 
-            while((DateTime.Now - startTime).TotalSeconds <= waitTimeSeconds)
+            while ((DateTime.Now - startTime).TotalSeconds <= waitTimeSeconds)
             {
                 if (WebDriver.Url.Contains(expectedUrl))
                 {

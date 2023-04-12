@@ -17,6 +17,7 @@ namespace WebDriverDemo.Tests.Google
         }
 
         [Fact]
+        [Trait("Priority", "High")]
         public void GoogleSearch_SearchForYellowSubmarineWiki_YellowSubmarineWikiPageIsDisplayed()
         {
             // Arrange
@@ -37,7 +38,7 @@ namespace WebDriverDemo.Tests.Google
             // Assert
             Log.StepDescription($"Verify that the '{expectedLinkText}' page successfully displays");
             var actualUrl = _google.CurrentUrl;
-            AssertWrapper.Equal(expectedUrl, actualUrl);            
+            AssertWrapper.Equal(expectedUrl, actualUrl);
         }
     }
 }

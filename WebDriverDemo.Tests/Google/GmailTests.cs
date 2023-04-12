@@ -1,11 +1,11 @@
-using WebDriverDemo.Security;
+using System.Threading;
 using WebDriverDemo.Extensions;
 using WebDriverDemo.Libraries.Core;
 using WebDriverDemo.Libraries.Maps.Google;
 using WebDriverDemo.Libraries.Wrappers;
+using WebDriverDemo.Security;
 using Xunit;
 using Xunit.Abstractions;
-using System.Threading;
 
 namespace WebDriverDemo.Tests.Google
 {
@@ -21,8 +21,8 @@ namespace WebDriverDemo.Tests.Google
         }
 
         [Fact]
-        [Trait("TestCategory", "Smoke")]
-        [Trait("TestCategory", "Day1")]
+        [Trait("Priority", "High")]
+        [Trait("Sequence", "Day1")]
         public void GoogleMail_LogIntoAccount_AccountLoginIsSuccessful()
         {
             // Arrange
@@ -48,17 +48,17 @@ namespace WebDriverDemo.Tests.Google
             _google.Gmail.Signin.EnterPassword(password);
             _google.Gmail.Signin.ClickNextButton();
 
-            // Assert            
+            // Assert
             Log.StepDescription("Validate successful login.");
             _google.WaitForUrlChange(expectedUrl);
-            
+
             var actualURL = _google.CurrentUrl;
             AssertWrapper.Equal(expectedUrl, actualURL);
         }
 
         [Fact]
-        [Trait("TestCategory", "Regression")]
-        [Trait("TestCategory","Day1")]
+        [Trait("Priority", "Medium")]
+        [Trait("Sequence", "Day1")]
         public void GoogleMail_SendEmail_EmailSendIsSuccessful()
         {
             // Arrange
@@ -67,11 +67,11 @@ namespace WebDriverDemo.Tests.Google
             var toEmailAddress = "bluemustardtest+abc@gmail.com";
             var subject = "This is a test - ABC123"; //.AppendRandomCharacters(5);
             var body = "Hello, world!";
-            
+
             // Act
             Log.StepDescription($"Navigate to Gmail login page.");
             _google.Home.ExpandAppsMenu();
-            
+
             Log.StepDescription("Click 'Gmail' button.");
             _google.Home.ClickAppMenuItem("Gmail");
 
@@ -96,14 +96,14 @@ namespace WebDriverDemo.Tests.Google
             _google.Gmail.Inbox.ClickSendButton();
             Thread.Sleep(3000);
 
-            // Assert            
+            // Assert
             Log.StepDescription("Verify email was successfully sent.");
             AssertWrapper.True(_google.Gmail.Inbox.IsEmailDisplayed(subject));
         }
 
         [Fact]
-        [Trait("TestCategory", "Regression")]
-        [Trait("TestCategory", "Day2")]
+        [Trait("Priority", "Regression")]
+        [Trait("Sequence", "Day2")]
         public void GoogleMail_DeleteEmail_EmailSendIsSuccessful()
         {
             // Arrange
@@ -132,7 +132,7 @@ namespace WebDriverDemo.Tests.Google
             Log.StepDescription("Click 'Send' button.");
             _google.Gmail.Inbox.DeleteEmail(subject);
 
-            // Assert            
+            // Assert
             Log.StepDescription("Verify email was successfully sent.");
             AssertWrapper.False(_google.Gmail.Inbox.IsEmailDisplayed(subject));
         }

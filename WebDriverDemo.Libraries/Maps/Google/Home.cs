@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace WebDriverDemo.Libraries.Maps.Google
 {
-    public class Home
+    public class Home : MapBase
     {
         private readonly IWebDriver _webDriver;
 
-        public Home(IWebDriver webDriver)
+        public Home(IWebDriver webDriver) : base(webDriver)
         {
             _webDriver = webDriver;
         }

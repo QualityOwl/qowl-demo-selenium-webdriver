@@ -1,7 +1,7 @@
 using System.Threading;
 using WebDriverDemo.Extensions;
 using WebDriverDemo.Libraries.Core;
-using WebDriverDemo.Libraries.Maps.Google;
+using WebDriverDemo.Libraries.Runners;
 using WebDriverDemo.Libraries.Wrappers;
 using WebDriverDemo.Security;
 using Xunit;
@@ -14,9 +14,9 @@ namespace WebDriverDemo.Tests.Google
         private GoogleRunner _google;
         private Credentials _credentials;
 
-        public GmailTests(ITestOutputHelper output) : base(output)
+        public GmailTests(ITestOutputHelper log) : base(log)
         {
-            _google = new GoogleRunner(output, WebDriver);
+            _google = new GoogleRunner(Log, WebDriver);
             _credentials = new Credentials();
         }
 

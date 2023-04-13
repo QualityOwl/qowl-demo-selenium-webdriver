@@ -1,7 +1,7 @@
 using OpenQA.Selenium;
 using WebDriverDemo.Extensions;
 using WebDriverDemo.Libraries.Core;
-using WebDriverDemo.Libraries.Maps.SauceLabs;
+using WebDriverDemo.Libraries.Runners;
 using WebDriverDemo.Libraries.Wrappers;
 using Xunit;
 using Xunit.Abstractions;
@@ -12,9 +12,9 @@ namespace WebDriverDemo.Tests.SauceLabs
     {
         private SauceLabsRunner _sauceLabs;
 
-        public InventoryTests(ITestOutputHelper output) : base(output)
+        public InventoryTests(ITestOutputHelper log) : base(log)
         {
-            _sauceLabs = new SauceLabsRunner(output, WebDriver);
+            _sauceLabs = new SauceLabsRunner(Log, WebDriver);
         }
 
         [Fact]

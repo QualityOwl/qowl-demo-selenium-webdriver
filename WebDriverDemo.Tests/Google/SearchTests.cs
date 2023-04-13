@@ -1,6 +1,6 @@
 using WebDriverDemo.Extensions;
 using WebDriverDemo.Libraries.Core;
-using WebDriverDemo.Libraries.Maps.Google;
+using WebDriverDemo.Libraries.Runners;
 using WebDriverDemo.Libraries.Wrappers;
 using Xunit;
 using Xunit.Abstractions;
@@ -11,9 +11,9 @@ namespace WebDriverDemo.Tests.Google
     {
         private GoogleRunner _google;
 
-        public SearchTests(ITestOutputHelper output) : base(output)
-        {
-            _google = new GoogleRunner(output, WebDriver);
+        public SearchTests(ITestOutputHelper log) : base(log)
+        {            
+            _google = new GoogleRunner(Log, WebDriver);
         }
 
         [Fact]

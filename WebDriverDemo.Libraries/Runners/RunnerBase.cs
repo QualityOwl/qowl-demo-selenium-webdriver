@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace WebDriverDemo.Libraries.Maps
+namespace WebDriverDemo.Libraries.Runners
 {
     public abstract class RunnerBase
     {

@@ -1,8 +1,9 @@
 ﻿using OpenQA.Selenium;
 using WebDriverDemo.Extensions;
+using WebDriverDemo.Libraries.Maps.SauceLabs;
 using Xunit.Abstractions;
 
-namespace WebDriverDemo.Libraries.Maps.SauceLabs
+namespace WebDriverDemo.Libraries.Runners
 {
     public class SauceLabsRunner : RunnerBase
     {

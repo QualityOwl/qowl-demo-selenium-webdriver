@@ -2,9 +2,10 @@
 using System;
 using System.Threading;
 using WebDriverDemo.Extensions;
+using WebDriverDemo.Libraries.Maps.Google;
 using Xunit.Abstractions;
 
-namespace WebDriverDemo.Libraries.Maps.Google
+namespace WebDriverDemo.Libraries.Runners
 {
     public class GoogleRunner : RunnerBase
     {

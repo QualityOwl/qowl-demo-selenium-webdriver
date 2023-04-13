@@ -1,13 +1,13 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 using System;
 using System.Threading;
 using WebDriverDemo.Extensions;
+using WebDriverDemo.Libraries.Maps.Google;
 using Xunit.Abstractions;
 
-namespace WebDriverDemo.Libraries.Maps.Google
+namespace WebDriverDemo.Libraries.Runners
 {
-    public class GoogleRunner
+    public class GoogleRunner : RunnerBase
     {
         public IWebDriver WebDriver { get; private set; }
         public string BaseUrl => "https://www.google.com/";
@@ -22,7 +22,7 @@ namespace WebDriverDemo.Libraries.Maps.Google
             }
         }
 
-        public GoogleRunner(ITestOutputHelper log, IWebDriver webDriver)
+        public GoogleRunner(ITestOutputHelper log, IWebDriver webDriver) : base(webDriver)
         {
             log.StepDescription($"Navigate to '{BaseUrl}'.");
             WebDriver = webDriver;
@@ -30,23 +30,11 @@ namespace WebDriverDemo.Libraries.Maps.Google
             WebDriver.WaitForPageLoad();
         }
 
-        public void PressSendKey(int numberOfPresses = 1)
-        {
-            var actions = new Actions(WebDriver);
-
-            for (int i = 1; i <= numberOfPresses; i++)
-            {
-                actions.SendKeys(Keys.PageDown).Perform();
-
-                actions.Pause(TimeSpan.FromSeconds(3));
-            }
-        }
-
         public void WaitForUrlChange(string expectedUrl, int waitTimeSeconds = 10)
         {
             var startTime = DateTime.Now;
 
-            while((DateTime.Now - startTime).TotalSeconds <= waitTimeSeconds)
+            while ((DateTime.Now - startTime).TotalSeconds <= waitTimeSeconds)
             {
                 if (WebDriver.Url.Contains(expectedUrl))
                 {

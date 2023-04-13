@@ -57,7 +57,6 @@ namespace WebDriverDemo.Libraries.Core
         public void Dispose()
         {
             WebDriver.Quit();
-
             Log.FooterText();
         }
     }

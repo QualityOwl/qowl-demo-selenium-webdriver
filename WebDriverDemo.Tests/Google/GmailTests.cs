@@ -1,28 +1,28 @@
-using WebDriverDemo.Security;
+using System.Threading;
 using WebDriverDemo.Extensions;
 using WebDriverDemo.Libraries.Core;
-using WebDriverDemo.Libraries.Maps.Google;
+using WebDriverDemo.Libraries.Runners;
 using WebDriverDemo.Libraries.Wrappers;
+using WebDriverDemo.Security;
 using Xunit;
 using Xunit.Abstractions;
-using System.Threading;
 
 namespace WebDriverDemo.Tests.Google
 {
     public class GmailTests : TestBase
     {
-        private GoogleRunner _googleRunner;
+        private GoogleRunner _google;
         private Credentials _credentials;
 
-        public GmailTests(ITestOutputHelper output) : base(output)
+        public GmailTests(ITestOutputHelper log) : base(log)
         {
-            _googleRunner = new GoogleRunner(output, WebDriver);
+            _google = new GoogleRunner(Log, WebDriver);
             _credentials = new Credentials();
         }
 
         [Fact]
-        [Trait("TestCategory", "Smoke")]
-        [Trait("TestCategory", "Day1")]
+        [Trait("Priority", "High")]
+        [Trait("Sequence", "Day1")]
         public void GoogleMail_LogIntoAccount_AccountLoginIsSuccessful()
         {
             // Arrange
@@ -32,33 +32,33 @@ namespace WebDriverDemo.Tests.Google
 
             // Act
             Log.StepDescription($"Navigate to Gmail login page.");
-            _googleRunner.Home.ExpandAppsMenu();
+            _google.Home.ExpandAppsMenu();
 
             Log.StepDescription("Click 'Gmail' button.");
-            _googleRunner.Home.ClickAppMenuItem("Gmail");
+            _google.Home.ClickAppMenuItem("Gmail");
 
             Log.StepDescription("Click 'Signin' button.");
-            _googleRunner.Gmail.About.ClickSigninButton();
+            _google.Gmail.About.ClickSigninButton();
 
             Log.StepDescription("Enter 'Email address'.");
-            _googleRunner.Gmail.Signin.EnterEmailAddress(emailAddress);
-            _googleRunner.Gmail.Signin.ClickNextButton();
+            _google.Gmail.Signin.EnterEmailAddress(emailAddress);
+            _google.Gmail.Signin.ClickNextButton();
 
             Log.StepDescription("Enter 'Password'.");
-            _googleRunner.Gmail.Signin.EnterPassword(password);
-            _googleRunner.Gmail.Signin.ClickNextButton();
+            _google.Gmail.Signin.EnterPassword(password);
+            _google.Gmail.Signin.ClickNextButton();
 
-            // Assert            
+            // Assert
             Log.StepDescription("Validate successful login.");
-            _googleRunner.WaitForUrlChange(expectedUrl);
-            
-            var actualURL = _googleRunner.CurrentUrl;
+            _google.WaitForUrlChange(expectedUrl);
+
+            var actualURL = _google.CurrentUrl;
             AssertWrapper.Equal(expectedUrl, actualURL);
         }
 
         [Fact]
-        [Trait("TestCategory", "Regression")]
-        [Trait("TestCategory","Day1")]
+        [Trait("Priority", "Medium")]
+        [Trait("Sequence", "Day1")]
         public void GoogleMail_SendEmail_EmailSendIsSuccessful()
         {
             // Arrange
@@ -67,43 +67,43 @@ namespace WebDriverDemo.Tests.Google
             var toEmailAddress = "bluemustardtest+abc@gmail.com";
             var subject = "This is a test - ABC123"; //.AppendRandomCharacters(5);
             var body = "Hello, world!";
-            
+
             // Act
             Log.StepDescription($"Navigate to Gmail login page.");
-            _googleRunner.Home.ExpandAppsMenu();
-            
+            _google.Home.ExpandAppsMenu();
+
             Log.StepDescription("Click 'Gmail' button.");
-            _googleRunner.Home.ClickAppMenuItem("Gmail");
+            _google.Home.ClickAppMenuItem("Gmail");
 
             Log.StepDescription("Click 'Signin' button.");
-            _googleRunner.Gmail.About.ClickSigninButton();
+            _google.Gmail.About.ClickSigninButton();
 
             Log.StepDescription("Enter 'Email address'.");
-            _googleRunner.Gmail.Signin.EnterEmailAddress(emailAddress);
-            _googleRunner.Gmail.Signin.ClickNextButton();
+            _google.Gmail.Signin.EnterEmailAddress(emailAddress);
+            _google.Gmail.Signin.ClickNextButton();
 
             Log.StepDescription("Enter 'Password'.");
-            _googleRunner.Gmail.Signin.EnterPassword(password);
-            _googleRunner.Gmail.Signin.ClickNextButton();
+            _google.Gmail.Signin.EnterPassword(password);
+            _google.Gmail.Signin.ClickNextButton();
 
             Log.StepDescription("Click 'Compose' button.");
-            _googleRunner.Gmail.Inbox.ClickComposeButton();
+            _google.Gmail.Inbox.ClickComposeButton();
 
             Log.StepDescription("Complete 'New Message' window fields.");
-            _googleRunner.Gmail.Inbox.EnterNewMessage(toEmailAddress, subject, body);
+            _google.Gmail.Inbox.EnterNewMessage(toEmailAddress, subject, body);
 
             Log.StepDescription("Click 'Send' button.");
-            _googleRunner.Gmail.Inbox.ClickSendButton();
+            _google.Gmail.Inbox.ClickSendButton();
             Thread.Sleep(3000);
 
-            // Assert            
+            // Assert
             Log.StepDescription("Verify email was successfully sent.");
-            AssertWrapper.True(_googleRunner.Gmail.Inbox.IsEmailDisplayed(subject));
+            AssertWrapper.True(_google.Gmail.Inbox.IsEmailDisplayed(subject));
         }
 
         [Fact]
-        [Trait("TestCategory", "Regression")]
-        [Trait("TestCategory", "Day2")]
+        [Trait("Priority", "Regression")]
+        [Trait("Sequence", "Day2")]
         public void GoogleMail_DeleteEmail_EmailSendIsSuccessful()
         {
             // Arrange
@@ -113,28 +113,28 @@ namespace WebDriverDemo.Tests.Google
 
             // Act
             Log.StepDescription($"Navigate to Gmail login page.");
-            _googleRunner.Home.ExpandAppsMenu();
+            _google.Home.ExpandAppsMenu();
 
             Log.StepDescription("Click 'Gmail' button.");
-            _googleRunner.Home.ClickAppMenuItem("Gmail");
+            _google.Home.ClickAppMenuItem("Gmail");
 
             Log.StepDescription("Click 'Signin' button.");
-            _googleRunner.Gmail.About.ClickSigninButton();
+            _google.Gmail.About.ClickSigninButton();
 
             Log.StepDescription("Enter 'Email address'.");
-            _googleRunner.Gmail.Signin.EnterEmailAddress(emailAddress);
-            _googleRunner.Gmail.Signin.ClickNextButton();
+            _google.Gmail.Signin.EnterEmailAddress(emailAddress);
+            _google.Gmail.Signin.ClickNextButton();
 
             Log.StepDescription("Enter 'Password'.");
-            _googleRunner.Gmail.Signin.EnterPassword(password);
-            _googleRunner.Gmail.Signin.ClickNextButton();
+            _google.Gmail.Signin.EnterPassword(password);
+            _google.Gmail.Signin.ClickNextButton();
 
             Log.StepDescription("Click 'Send' button.");
-            _googleRunner.Gmail.Inbox.DeleteEmail(subject);
+            _google.Gmail.Inbox.DeleteEmail(subject);
 
-            // Assert            
+            // Assert
             Log.StepDescription("Verify email was successfully sent.");
-            AssertWrapper.False(_googleRunner.Gmail.Inbox.IsEmailDisplayed(subject));
+            AssertWrapper.False(_google.Gmail.Inbox.IsEmailDisplayed(subject));
         }
     }
 }

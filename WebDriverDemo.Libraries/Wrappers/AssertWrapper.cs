@@ -31,6 +31,22 @@ namespace WebDriverDemo.Libraries.Wrappers
             }
         }
 
+        public static void NotEqual<T>(T expected, T actual)
+        {
+            try
+            {
+                Assert.NotEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+                _log.Value.ResultDescription("'Assert.NotEqual' Failed:");
+                _log.Value.ResultDescription($"Expected = {expected}");
+                _log.Value.ResultDescription($"Actual =   {actual}");
+
+                throw;
+            }
+        }
+
         public static void True(bool condition)
         {
             try
